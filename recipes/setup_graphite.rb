@@ -35,6 +35,9 @@ node['graphite']['daemons'].each do |daemon|
       owner "#{node['graphite']['group_account']}"
       group "#{node['graphite']['group_account']}"
       mode '0644'
+      variables(
+        :daemon => daemon
+      )
     end
   end
 

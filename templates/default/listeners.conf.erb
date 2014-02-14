@@ -41,12 +41,11 @@
 #
 # Note: only plaintext-receiver is currently supported for udp listeners.
 #
+<% @daemon['listeners'].each do |reciver_type, values| %>
+[<%= reciver_type %>-<%= values['port'] %>]
+protocol  = <%= values['protocol'] %>
+interface = <%= values['interface'] %>
+port = <%= values['port'] %>
+type = <%= values['type'] %>
 
-[plaintext-receiver-2003]
-protocol = udp
-port = 2003
-type = plaintext-receiver
-
-[pickle-receiver-2004]
-port = 2004
-type = pickle-receiver
+<% end %>

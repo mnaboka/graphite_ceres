@@ -7,21 +7,21 @@
 # Limit the size of the cache to avoid swapping or becoming CPU bound.
 # Sorts and serving cache queries gets more expensive as the cache grows.
 # Use the value "inf" (infinity) for an unlimited cache size.
-MAX_CACHE_SIZE = inf
+MAX_CACHE_SIZE = <%= @daemon['writer']['MAX_CACHE_SIZE'] %>
 
 # Set this to True to pause receiving metrics when the cache size
 # hits MAX_CACHE_SIZE. If this happens, sockets over which metrics are received
 # will temporarily stop accepting data until the cache falls below 95%. If this
 # is set to False (the default), received points will be dropped when the metric
 # cache fills.
-USE_FLOW_CONTROL = False
+USE_FLOW_CONTROL = <%= @daemon['writer']['USE_FLOW_CONTROL'] %>
 
 # Limits the number of database write operaitons per second. This is intended to
 # prevent over-utilizing the disk and thus starving the rest of the system.
 # When the rate of required updates exceeds this, then carbon's caching will
 # take effect and increase the overall throughput accordingly.
 # (formerly known as MAX_UPDATES_PER_SECOND)
-MAX_WRITES_PER_SECOND = 6000
+MAX_WRITES_PER_SECOND = <%= @daemon['writer']['MAX_WRITES_PER_SECOND'] %>
 
 # NOTE: Creating new metrics is very cheap for ceres, so when using ceres
 # you should set this to a much higher value like 1000.
@@ -32,20 +32,20 @@ MAX_WRITES_PER_SECOND = 6000
 # database files to all get created and thus longer until the data becomes usable.
 # Setting this value high (like "inf" for infinity) will cause graphite to create
 # the files quickly but at the risk of slowing I/O down considerably for a while.
-MAX_CREATES_PER_MINUTE = 5000
+MAX_CREATES_PER_MINUTE = <%= @daemon['writer']['MAX_CREATES_PER_MINUTE'] %>
 
 # By default, carbon will log every write operation (aka "update"). This can be
 # excessive and degrade performance if logging on the same volume as the whisper
 # data is stored.
-LOG_WRITES = True
-LOG_CACHE_HITS = True
+LOG_WRITES = <%= @daemon['writer']['LOG_WRITES'] %>
+LOG_CACHE_HITS =  <%= @daemon['writer']['LOG_CACHE_HITS'] %>
 
 # All datapoints received by a writer daemon go into a cache which the webapp
 # queries to get real-time data. If you have multiple carbon-daemon instances
 # it is advised that you use the 'second digit is instance number' port
 # numbering scheme described in detail in listeners.conf.
-CACHE_QUERY_INTERFACE = 0.0.0.0
-CACHE_QUERY_PORT = 7002
+CACHE_QUERY_INTERFACE = <%= @daemon['writer']['CACHE_QUERY_INTERFACE'] %>
+CACHE_QUERY_PORT = <%= @daemon['writer']['CACHE_QUERY_PORT'] %>
 
 # The thread(s) that writes metrics to disk can use on of the following strategies
 # determining the order in which metrics are removed from cache and flushed to
@@ -72,10 +72,10 @@ CACHE_QUERY_PORT = 7002
 # the OS's i/o scheduler is expected to compensate for the semi-random write
 # pattern.
 #
-CACHE_DRAIN_STRATEGY = sorted
+CACHE_DRAIN_STRATEGY = <%= @daemon['writer']['CACHE_DRAIN_STRATEGY'] %>
 
 # The WHITELISTS_DIR is the directory that is searched for list files
 # referenced by storage-rules.conf. For example, if your storage rule
 # sets 'list = foo', the file ${WHITELISTS_DIR}/foo is used to
 # test the metric's presence.
-WHITELISTS_DIR = /opt/graphite/storage/lists
+WHITELISTS_DIR = <%= @daemon['writer']['WHITELISTS_DIR'] %>

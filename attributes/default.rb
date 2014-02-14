@@ -10,14 +10,26 @@ default['graphite']['megacarbon']['branch'] = "megacarbon"
 default['graphite']['ceres']['git'] = "https://github.com/graphite-project/ceres.git"
 default['graphite']['ceres']['branch'] = "master"
 
+
+
+default['graphite']['web']['logging']['DEFAULT_CACHE_DURATION'] = 60
+default['graphite']['web']['logging']['LOG_RENDERING_PERFORMANCE'] = 'True'
+default['graphite']['web']['logging']['LOG_CACHE_PERFORMANCE'] = 'True'
+default['graphite']['web']['logging']['LOG_METRIC_ACCESS'] = 'True'
+
+
+
+default['graphite']['encrypted_data_bag']['name'] = nil
 default['graphite']['web']['password'] = 'change_me'
-default['graphite']['web']['chef_role'] = 'graphite'
-default['graphite']['web']['url'] = 'graphite'
-default['graphite']['web']['url_aliases'] = []
-default['graphite']['web']['listen_port'] = 80
+default['graphite']['chef_role'] = 'graphite'
+default['graphite']['url'] = 'graphite'
+default['graphite']['url_aliases'] = []
+default['graphite']['listen_port'] = 80
 default['graphite']['base_dir'] = '/opt/graphite'
+default['graphite']['conf_dir'] = '/opt/graphite/conf'
 default['graphite']['doc_root'] = '/opt/graphite/webapp'
 default['graphite']['storage_dir'] = '/opt/graphite/storage'
+default['graphite']['ceres_dir'] = '/opt/graphite/storage/ceres'
 default['graphite']['timezone'] = 'America/Los_Angeles'
 default['graphite']['web']['django_root'] = '@DJANGO_ROOT@'
 default['graphite']['web']['git'] = "https://github.com/graphite-project/graphite-web.git"

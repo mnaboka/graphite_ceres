@@ -2,45 +2,17 @@
 # Can be whisper or ceres. If you are not familiar with ceres
 # it is recommended that you stick with whisper as ceres does not
 # have any documentation yet, and works quite differently than whisper.
-DATABASE = ceres
+DATABASE = <%= @daemon['db']['DATABASE'] %>
 
 # Directory in which to store metric data. This should be specific to the
 # database library to avoid conflicts. So if you switch DATABASE
 # to ceres, you'd switch this to /opt/graphite/storage/ceres/
-LOCAL_DATA_DIR = /opt/graphite/storage/ceres/
+LOCAL_DATA_DIR = <%= @node['graphite']['ceres_dir'] %> 
 
 
 ##############################
 # Database-specific settings #
 ##############################
-
-[whisper]
-# On some systems it is desirable for whisper to write synchronously.
-# Set this option to True if you'd like to try this. Basically it will
-# shift the onus of buffering writes from the kernel into carbon's cache.
-AUTOFLUSH = False
-
-# Enabling this option will cause Whisper to lock each Whisper file it writes
-# to with an exclusive lock (LOCK_EX, see: man 2 flock). This is useful when
-# multiple carbon daemons are writing to the same files
-LOCK_WRITES = False
-
-# By default new Whisper files are created pre-allocated with the data region
-# filled with zeros to prevent fragmentation and speed up contiguous reads and
-# writes (which are common). Enabling this option will cause Whisper to create
-# the file sparsely instead. Enabling this option may allow a large increase of
-# MAX_CREATES_PER_MINUTE but may have longer term performance implications
-# depending on the underlying storage configuration.
-SPARSE_CREATE = False
-
-# By default new Whisper files are created pre-allocated with the data region
-# filled with zeros to prevent fragmentation and speed up contiguous reads and
-# writes (which are common). Enabling this option will cause Whisper to create
-# fallocate the file instead.  Only beneficial on a filesystem that
-# supports fallocate.  It maintains the benefits of contiguous reads/writes.
-# but with a much faster creation speed. Enabling this option may
-# allow a large increase of MAX_CREATES_PER_MINUTE.
-# FALLOCATE_CREATE = False
 
 [ceres]
 # Ceres nodes can have many slices and caching the right ones can improve
@@ -50,7 +22,7 @@ SPARSE_CREATE = False
 #    latest - only the most recent slice is cached
 #       all - all slices are cached
 #      none - slice caching is disabled
-DEFAULT_SLICE_CACHING_BEHAVIOR = latest
+DEFAULT_SLICE_CACHING_BEHAVIOR = <%= @daemon['db']['DEFAULT_SLICE_CACHING_BEHAVIOR'] %>
 
 # If a Ceres node accumulates too many slices, performance can suffer.
 # This can be caused by intermittently reported data. To mitigate
@@ -68,4 +40,4 @@ DEFAULT_SLICE_CACHING_BEHAVIOR = latest
 # set it to be huge because then if a large but allowed gap occurs it has to
 # get filled in, which means instead of a simple 8-byte write to a new file we
 # could end up doing an (8 * MAX_SLICE_GAP)-byte write to the latest slice.
-MAX_SLICE_GAP = 80
+MAX_SLICE_GAP = <%= @daemon['db']['MAX_SLICE_GAP'] %>

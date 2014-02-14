@@ -17,7 +17,7 @@
 
 include_recipe 'git'
 
-%w{pkg-config libffi-dev}.each do |pkg|
+%w{pkg-config libffi-dev libcairo2}.each do |pkg|
   package "#{pkg}" do
     action :install
   end
@@ -31,14 +31,15 @@ end
   end
 
   if key == 'web'
-    execute "remove cairo dep" do
+    execute "remove_cairo_dep" do
       command "sed -i '/cairo/d' #{key}/requirements.txt"
       cwd Chef::Config[:file_cache_path]
-      not_if "grep -q cairo #{key}/requirements.txt"
+      only_if "grep -q cairo #{key}/requirements.txt"
     end
     execute "pip_install_cairocffi" do
       command "pip install cairocffi"
       cwd Chef::Config[:file_cache_path]
+      not_if "pip show cairocffi | grep Name"
     end
   end
 

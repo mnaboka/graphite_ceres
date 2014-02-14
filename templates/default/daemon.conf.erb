@@ -31,7 +31,7 @@
 # Specify the user to drop privileges to. If this is blank
 # carbon runs as the user that invokes it. This user must
 # have write access to the local data directory.
-USER =
+USER = <%= @node['graphite']['user_account'] %>
 
 ##########################
 # Pipeline configuration #
@@ -78,11 +78,11 @@ USER =
 # keeps cache queries more responsive, and thus the webapp is
 # more responsive.
 
-PIPELINE = write
+PIPELINE = <%= @daemon['daemon']['PIPELINE'].join(', ')  %>
 
 # By default we use a "secure" pickle implementation (see Bug #817247 for details).
 # There is a small amount of overhead introduced by this. If you really need
 # the speed at the expense of having an easily exploitable security hole you
 # can enable the faster insecure unpickler. In general you should not expose your
 # Graphite system to untrusted hosts/users anyways.
-USE_INSECURE_UNPICKLER = False
+USE_INSECURE_UNPICKLER = <%= @daemon['daemon']['USE_INSECURE_UNPICKLER'] %>

@@ -29,7 +29,7 @@ default['graphite']['daemons'] = [
         'CACHE_QUERY_INTERFACE' => '0.0.0.0',
         'CACHE_QUERY_PORT' => 7002,
         'CACHE_DRAIN_STRATEGY' => 'sorted',
-        'WHITELISTS_DIR' => "#{node['graphite']['web']['storage_dir']}/lists"
+        'WHITELISTS_DIR' => "#{node['graphite']['storage_dir']}/lists"
       },
     'listeners' =>
       {
@@ -41,6 +41,7 @@ default['graphite']['daemons'] = [
             'type' => 'plaintext-receiver'
           },
         'pickle_reciver' => {
+            'protocol' => 'tcp',
             'interface' => '0.0.0.0',
             'port' => 2004,
             'type' => 'pickle-receiver'
