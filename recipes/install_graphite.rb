@@ -46,4 +46,12 @@ end
     command "pip install -r #{key}/requirements.txt"
     cwd Chef::Config[:file_cache_path]
   end
+
+  Chef::Log.info("AAA: #{node['graphite']['base_dir']}")
+  execute "python_install_#{key}" do
+    command "python setup.py install --prefix=#{node['graphite']['base_dir']}"
+    cwd Chef::Config[:file_cache_path] + "/#{key}"
+    not_if { ::File.exists?("#{node['graphite']['base_dir']}/lib") && ::File.exists?("#{node['graphite']['base_dir']}/webapp") && ::File.exists?("#{node['graphite']['base_dir']}/bin")}
+  end
+
 end

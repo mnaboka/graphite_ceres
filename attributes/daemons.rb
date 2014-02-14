@@ -45,6 +45,15 @@ default['graphite']['daemons'] = [
             'port' => 2004,
             'type' => 'pickle-receiver'
         }
-      }
+      },
+    'aggregation' => {},
+    'aggregation-filters' => {},
+    'aggregation-rules' => {},
+    'filter-rules' => {},
+    'management' => {},
+    'relay' => {},
+    'relay-rules' => {},
+    'rewrite-rules' => {},
+    'storage-rules' => {}
   }
 ]

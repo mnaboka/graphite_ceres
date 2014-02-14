@@ -15,4 +15,28 @@
 # limitations under the License.
 #
 
+carbon_daemons = "#{node['graphite']['base_dir']}/conf/carbon-daemons"
+
+node['graphite']['daemons'].each do |daemon|
+  # Process config dir
+  directory "#{carbon_daemons}/#{daemon['name']}" do
+    owner "#{node['graphite']['group_account']}"
+    group "#{node['graphite']['group_account']}"
+    mode '0644'
+    action :create
+  end
+
+  daemon.each do |key, value|
+    Chef::Log.info("MMM" + key)
+    next if key == 'name'
+
+    template "#{carbon_daemons}/#{daemon['name']}/#{key}.conf" do
+      source "#{key}.conf.erb"
+      owner "#{node['graphite']['group_account']}"
+      group "#{node['graphite']['group_account']}"
+      mode '0644'
+    end
+  end
+
+end
 
