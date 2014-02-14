@@ -34,7 +34,7 @@ end
     execute "remove_cairo_dep" do
       command "sed -i '/cairo/d' #{key}/requirements.txt"
       cwd Chef::Config[:file_cache_path]
-      only_if "grep -q cairo #{key}/requirements.txt"
+#      only_if "grep -q cairo #{key}/requirements.txt"
     end
     execute "pip_install_cairocffi" do
       command "pip install cairocffi"
