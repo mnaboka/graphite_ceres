@@ -1,6 +1,6 @@
 #
-# Cookbook Name:: graphite
-# Recipe:: default
+# Cookbook Name:: graphite_ceres
+# Recipe:: user
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,10 +15,17 @@
 # limitations under the License.
 #
 
-include_recipe 'python'
-include_recipe 'apache2' if node['graphite']['web_server'] == 'apache'
-include_recipe 'memcached' if node['graphite']['web']['memcached_hosts'].length > 0
+group node['graphite']['group_account'] do
+  system true
+  action :create
+  only_if { node['graphite']['create_user'] }
+end
 
-include_recipe 'graphite_ceres::user'
-include_recipe 'graphite_ceres::install_graphite'
-include_recipe 'graphite_ceres::setup_graphite'
+user node['graphite']['user_account'] do
+  system true
+  group node['graphite']['group_account']
+  home '/var/lib/graphite'
+  shell '/bin/none'
+  action :create
+  only_if { node['graphite']['create_user'] }
+end

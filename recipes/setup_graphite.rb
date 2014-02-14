@@ -1,6 +1,6 @@
-#
-# Cookbook Name:: graphite
-# Recipe:: default
+# Maksym Naboka 2014
+# Cookbook Name:: graphite_ceres
+# Recipe:: setup_graphite
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,10 +15,4 @@
 # limitations under the License.
 #
 
-include_recipe 'python'
-include_recipe 'apache2' if node['graphite']['web_server'] == 'apache'
-include_recipe 'memcached' if node['graphite']['web']['memcached_hosts'].length > 0
 
-include_recipe 'graphite_ceres::user'
-include_recipe 'graphite_ceres::install_graphite'
-include_recipe 'graphite_ceres::setup_graphite'
