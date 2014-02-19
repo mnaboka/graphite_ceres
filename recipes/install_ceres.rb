@@ -33,5 +33,5 @@ end
 execute "python_install_ceres" do
   command "python setup.py install --prefix=#{node['graphite']['base_dir']}"
   cwd Chef::Config[:file_cache_path] + "/#{ceres}"
-  not_if { ::File.exists?("#{node['graphite']['base_dir']}/lib") }
+  creates "#{node['graphite']['base_dir']}/lib"
 end

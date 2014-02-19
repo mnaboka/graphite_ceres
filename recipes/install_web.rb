@@ -40,5 +40,5 @@ end
 execute "python_install_web" do
   command "python setup.py install --prefix=#{node['graphite']['base_dir']}"
   cwd Chef::Config[:file_cache_path] + "/#{web}"
-  not_if { ::File.exists?("#{node['graphite']['base_dir']}/webapp") }
+  creates "#{node['graphite']['base_dir']}/webapp"
 end
