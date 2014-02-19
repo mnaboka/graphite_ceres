@@ -1,6 +1,6 @@
 # Maksym Naboka 2014
 # Cookbook Name:: graphite_ceres
-# Recipe:: setup_graphite
+# Recipe:: install_graphite
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,6 +15,29 @@
 # limitations under the License.
 #
 
+include_recipe 'git'
+megacarbon = 'megacarbon'
+
+git "#{Chef::Config[:file_cache_path]}/#{megacarbon}" do
+  repository node['graphite']['megacarbon']['git']
+  reference node['graphite']['megacarbon']['branch']
+  action :checkout
+  notifies :run, "execute[install_megacarbon_dependancies]"
+end
+
+execute "install_megacarbon_dependancies" do
+  command "pip install -r #{megacarbon}/requirements.txt"
+  cwd Chef::Config[:file_cache_path]
+  action :nothing
+end
+
+execute "python_install_megacarbon" do
+  command "python setup.py install --prefix=#{node['graphite']['base_dir']}"
+  cwd Chef::Config[:file_cache_path] + "/#{megacarbon}"
+  not_if { ::File.exists?("node['graphite']['base_dir']}/bin") }
+end
+
+
 carbon_daemons = "#{node['graphite']['base_dir']}/conf/carbon-daemons"
 
 node['graphite']['daemons'].each do |daemon|
@@ -27,7 +50,6 @@ node['graphite']['daemons'].each do |daemon|
   end
 
   daemon.each do |key, value|
-    Chef::Log.info("MMM" + key)
     next if key == 'name'
 
     template "#{carbon_daemons}/#{daemon['name']}/#{key}.conf" do
@@ -43,3 +65,9 @@ node['graphite']['daemons'].each do |daemon|
 
 end
 
+directory node['graphite']['base_dir'] do
+    owner "#{node['graphite']['group_account']}"
+    group "#{node['graphite']['group_account']}"
+    recursive true
+    action :nothing
+end

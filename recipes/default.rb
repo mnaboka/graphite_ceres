@@ -14,12 +14,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+include_recipe 'apt'
 
 include_recipe 'python'
 include_recipe 'apache2' if node['graphite']['web_server'] == 'apache'
 include_recipe 'memcached' if node['graphite']['web']['memcached_hosts'].length > 0
 
 include_recipe 'graphite_ceres::user'
-include_recipe 'graphite_ceres::install_graphite'
-include_recipe 'graphite_ceres::setup_graphite'
+include_recipe 'graphite_ceres::install_packages'
+
+include_recipe 'graphite_ceres::install_ceres'
+include_recipe 'graphite_ceres::install_megacarbon'
+include_recipe 'graphite_ceres::install_web'
 include_recipe 'graphite_ceres::setup_webapp'
+
+include_recipe 'graphite_ceres::set_dir_perms'
+include_recipe 'graphite_ceres::initialize_db'
