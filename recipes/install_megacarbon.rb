@@ -34,7 +34,7 @@ end
 execute "python_install_megacarbon" do
   command "python setup.py install --prefix=#{node['graphite']['base_dir']}"
   cwd Chef::Config[:file_cache_path] + "/#{megacarbon}"
-  creates "#{node['graphite']['base_dir']}/bin"
+  creates "#{node['graphite']['base_dir']}/bin/carbon-daemon.py"
 end
 
 
