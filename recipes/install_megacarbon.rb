@@ -27,8 +27,15 @@ end
 
 execute "install_megacarbon_dependancies" do
   command "pip install -r #{megacarbon}/requirements.txt"
-  cwd Chef::Config[:file_cache_path]
+  cwd Chef::Config[:file_cache_path] + '/megacarbon'
   action :nothing
+end
+
+execute "check_cfg_path" do
+  command "sed -i 's@^prefix.*@prefix = \/opt\/graphite@' ./setup.cfg"
+  not_if "grep 'prefix =' ./setup.cfg | awk -F= '{print $2}' | sed -r 's/\s+//g' | grep -q '/opt/graphite2'"
+  cwd Chef::Config[:file_cache_path] + '/megacarbon'
+  action :run
 end
 
 execute "python_install_megacarbon" do
