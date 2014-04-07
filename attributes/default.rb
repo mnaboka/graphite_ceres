@@ -4,26 +4,19 @@
 
 include_attribute 'apache2'
 
-#default['graphite']['megacarbon']['git'] = "https://github.com/graphite-project/carbon.git"
-#default['graphite']['megacarbon']['branch'] = "megacarbon"
-#
-#default['graphite']['ceres']['git'] = "https://github.com/graphite-project/ceres.git"
-#default['graphite']['ceres']['branch'] = "master"
-#
-default['graphite']['web']['git'] = "https://github.com/graphite-project/graphite-web.git"
-default['graphite']['web']['branch'] = "master"
 
-default['graphite']['megacarbon']['git'] = "https://github.com/dkulikovsky/carbon.git"
+# Repository for graphite ceres
+default['graphite']['megacarbon']['git'] = "https://github.com/graphite-project/carbon.git"
 default['graphite']['megacarbon']['branch'] = "megacarbon"
 
-default['graphite']['ceres']['git'] = "https://github.com/dkulikovsky/ceres.git"
+default['graphite']['ceres']['git'] = "https://github.com/graphite-project/ceres.git"
 default['graphite']['ceres']['branch'] = "master"
 
-#default['graphite']['web']['git'] = "https://github.com/dkulikovsky/graphite-web.git"
-#default['graphite']['web']['branch'] = "master"
+default['graphite']['web']['git'] = "https://github.com/dkulikovsky/graphite-web.git"
+default['graphite']['web']['branch'] = "master"
 
 
-
+# Logging
 default['graphite']['web']['logging']['DEFAULT_CACHE_DURATION'] = 60
 default['graphite']['web']['logging']['LOG_RENDERING_PERFORMANCE'] = 'True'
 default['graphite']['web']['logging']['LOG_CACHE_PERFORMANCE'] = 'True'

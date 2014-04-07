@@ -74,7 +74,7 @@ end
 
 cookbook_file "#{storagedir}/graphite.db" do
   action :create_if_missing
-  notifies :run, 'execute[set admin password]'
+  notifies :run, 'execute[set admin password]', :immediately
 end
 
 execute 'set admin password' do

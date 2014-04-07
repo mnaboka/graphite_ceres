@@ -23,8 +23,8 @@ include_recipe 'memcached' if node['graphite']['web']['memcached_hosts'].length 
 include_recipe 'graphite_ceres::user'
 include_recipe 'graphite_ceres::install_packages'
 
-include_recipe 'graphite_ceres::install_ceres'
 include_recipe 'graphite_ceres::install_megacarbon'
+include_recipe 'graphite_ceres::install_ceres'
 include_recipe 'graphite_ceres::install_web'
 include_recipe 'graphite_ceres::setup_webapp'
 

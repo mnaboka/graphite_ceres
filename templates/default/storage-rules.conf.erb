@@ -120,6 +120,17 @@
 # If you sent 2 datapoints in a minute, each 10s interval without a datapoint
 # would be null.
 
-[default_1min_for_1day]
-match-all = true
-retentions = 1m:1d
+#[default_1min_for_1day]
+#match-all = true
+#retentions = 1m:1d
+
+<% @daemon['storage-rules'].each do |policy| %>
+<% policy.each do |key, value| %>
+<% if key == 'name' %>
+
+[<%= value %>]
+<% else %>
+<%= key %> = <%= value %>
+<% end %>
+<% end %>
+<% end %>

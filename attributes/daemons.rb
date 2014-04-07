@@ -55,6 +55,13 @@ default['graphite']['daemons'] = [
     'relay' => {},
     'relay-rules' => {},
     'rewrite-rules' => {},
-    'storage-rules' => {}
+    'storage-rules' => [
+      {
+        'name' => 'defaults',
+        'match-all' => true,
+        'retention' => '1m:30d',
+        'aggregation-method' => 'average'
+      }	
+    ]
   }
 ]

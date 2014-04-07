@@ -22,7 +22,7 @@ git "#{Chef::Config[:file_cache_path]}/#{megacarbon}" do
   repository node['graphite']['megacarbon']['git']
   reference node['graphite']['megacarbon']['branch']
   action :checkout
-  notifies :run, "execute[install_megacarbon_dependancies]"
+  notifies :run, "execute[install_megacarbon_dependancies]", :immediately
 end
 
 execute "install_megacarbon_dependancies" do

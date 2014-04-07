@@ -21,7 +21,7 @@ git "#{Chef::Config[:file_cache_path]}/#{ceres}" do
   repository node['graphite']['ceres']['git']
   reference node['graphite']['ceres']['branch']
   action :checkout
-  notifies :run, "execute[install_ceres_dependancies]"
+  notifies :run, "execute[install_ceres_dependancies]", :immediately
 end
 
 execute "install_ceres_dependancies" do
@@ -33,5 +33,5 @@ end
 execute "python_install_ceres" do
   command "python setup.py install --prefix=#{node['graphite']['base_dir']}"
   cwd Chef::Config[:file_cache_path] + "/#{ceres}"
-  creates "#{node['graphite']['base_dir']}/lib"
+  creates "#{node['graphite']['base_dir']}/bin/ceres-tree-create"
 end

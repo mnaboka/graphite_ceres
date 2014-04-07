@@ -21,14 +21,14 @@ git "#{Chef::Config[:file_cache_path]}/#{web}" do
   repository node['graphite']['web']['git']
   reference node['graphite']['web']['branch']
   action :checkout
-  notifies :run, "execute[remove_cairo_dep]"
+  notifies :run, "execute[remove_cairo_dep]", :immediately
 end
 
 execute "remove_cairo_dep" do
   command "sed -i '/cairo/d' #{web}/requirements.txt"
   cwd Chef::Config[:file_cache_path]
   action :nothing
-  notifies :run, "execute[install_web_dependencies]"
+  notifies :run, "execute[install_web_dependencies]", :immediately
 end
 
 execute "install_web_dependencies" do
