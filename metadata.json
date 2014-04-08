@@ -1,0 +1,34 @@
+{
+  "name": "1",
+  "description": "Installs/Configures 1",
+  "long_description": "graphite_ceres [![Build Status](https://api.travis-ci.org/darkonie/graphite_ceres.svg?branch=master)](https://travis-ci.org/darkonie/graphite_ceres)\n==============\n\nChef cookbook to manage graphite (megacarbon) with ceres storage.\n",
+  "maintainer": "YOUR_NAME",
+  "maintainer_email": "YOUR_EMAIL",
+  "license": "All rights reserved",
+  "platforms": {
+  },
+  "dependencies": {
+    "python": ">= 0.0.0",
+    "apache2": ">= 0.0.0",
+    "memcached": ">= 0.0.0",
+    "git": ">= 0.0.0",
+    "apt": ">= 0.0.0"
+  },
+  "recommendations": {
+  },
+  "suggestions": {
+  },
+  "conflicting": {
+  },
+  "providing": {
+  },
+  "replacing": {
+  },
+  "attributes": {
+  },
+  "groupings": {
+  },
+  "recipes": {
+  },
+  "version": "0.1.0"
+}
